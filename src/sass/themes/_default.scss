@@ -1,0 +1,70 @@
+// Colors
+$theme-color-primary: #aac6fc;
+$theme-color-secondary: #f6e049;
+$theme-color-tertiary: #e0719e;
+$theme-color-tertiary-light: #eebed3;
+
+.modal {
+    &__triggers {
+        margin-top: 7rem;
+
+        display: flex;
+        grid-column-gap: 2rem;
+        justify-content: center;
+    }
+
+    &__backdrop {
+        inset: 0;
+        background: rgba(#000, .2);
+        position: fixed;
+        z-index: 0;
+    }
+
+    &__container {
+        inset: 0;
+        opacity: 0;
+        visibility: hidden;
+        position: fixed;
+        transition: opacity linear .2s .4s, visibility linear .1s .5s;
+    }
+
+    &__content {
+        height: 45rem;
+        width: 60rem;
+        background-color: #fff;
+        border-radius: 1.5rem;
+        padding: 2rem;
+
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 100;
+    }
+
+    &__head {
+
+    }
+
+    &__body {
+        height: 90%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__foot {
+        position: absolute;
+        bottom: 2rem;
+    }
+
+    .show-modal {
+        opacity: 1;
+        visibility: visible;
+        transition: opacity linear .2s .1s, visibility linear .1s;
+    }
+    
+    .modal-blur {
+        backdrop-filter: blur(6px);
+    }
+}
