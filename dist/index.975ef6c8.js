@@ -562,8 +562,15 @@ var _sassyModal = require("./js/plugins/SassyModal");
 var _sassyModalDefault = parcelHelpers.interopDefault(_sassyModal);
 const modal = new (0, _sassyModalDefault.default)({
     blur: true,
+    centered: true,
     animation: "fade-in",
     showModalCSS: "show-modal"
+});
+// Use custom events
+const modalOne = document.querySelector('[data-modal-id="modal-one"]');
+modalOne.addEventListener("after_open", (event)=>{
+    const targetModal = event.detail;
+    targetModal.querySelector(".modal__content h3").innerText = "Modal One - After Open Event";
 });
 
 },{"./js/plugins/SassyModal":"6DGaX","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6DGaX":[function(require,module,exports) {
@@ -582,6 +589,7 @@ class SassyModal {
         };
         this.options = {
             blur: true,
+            centered: true,
             showModalCSS: "show-modal",
             animation: this.animations[0],
             dataAttributes: this.dataAttributes
@@ -646,16 +654,40 @@ class SassyModal {
         if (this.currentModal.length > 0) this.closeModal({
             modalID: this.currentModal
         });
+        this.handleCustomEvents({
+            type: "before_open",
+            modal
+        });
         modal.classList.add(this.options.showModalCSS);
         this.currentModal = modalID;
+        this.handleCustomEvents({
+            type: "after_open",
+            modal
+        });
     }
     closeModal({ modalID  }) {
         const modal = document.querySelector(`[${this.modalDataAtt}=${modalID}]`);
+        this.handleCustomEvents({
+            type: "before_close",
+            modal
+        });
         modal.classList.remove(this.options.showModalCSS);
         this.currentModal = "";
+        this.handleCustomEvents({
+            type: "after_close",
+            modal
+        });
+    }
+    handleCustomEvents({ type , modal  }) {
+        const event = new CustomEvent(type, {
+            bubbles: true,
+            detail: modal
+        });
+        modal.dispatchEvent(event);
     }
     calculateClasses() {
         const cssClasses = [];
+        if (this.options.centered) cssClasses.push("modal-centered");
         if (this.options.blur) cssClasses.push("modal-blur");
         if (this.isValidAnimation(this.options.animation)) cssClasses.push(this.options.animation);
         else cssClasses.push(this.animations[0]);

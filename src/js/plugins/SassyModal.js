@@ -10,6 +10,7 @@ export default class SassyModal {
 
         this.options = {
             blur: true,
+            centered: true,
             showModalCSS: 'show-modal',
             animation: this.animations[0],
             dataAttributes: this.dataAttributes
@@ -93,19 +94,32 @@ export default class SassyModal {
             this.closeModal({ modalID: this.currentModal });
         }
 
+        this.handleCustomEvents({ type: 'before_open', modal });
         modal.classList.add(this.options.showModalCSS);
         this.currentModal = modalID;
+        this.handleCustomEvents({ type: 'after_open', modal });
     }
 
     closeModal({ modalID }) {
         const modal = document.querySelector(`[${this.modalDataAtt}=${modalID}]`);
 
+        this.handleCustomEvents({ type: 'before_close', modal });
         modal.classList.remove(this.options.showModalCSS);
         this.currentModal = '';
+        this.handleCustomEvents({ type: 'after_close', modal });
+    }
+
+    handleCustomEvents({ type, modal }) {
+        const event = new CustomEvent(type, { bubbles: true, detail: modal });
+        modal.dispatchEvent(event);
     }
 
     calculateClasses() {
         const cssClasses = [];
+
+        if (this.options.centered) {
+            cssClasses.push('modal-centered');
+        }
 
         if (this.options.blur) {
             cssClasses.push('modal-blur');

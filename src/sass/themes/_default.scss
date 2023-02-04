@@ -4,6 +4,13 @@ $theme-color-secondary: #f6e049;
 $theme-color-tertiary: #e0719e;
 $theme-color-tertiary-light: #eebed3;
 
+// Transitions
+$modal-transition-in: cubic-bezier(0.65, 0.14, 0.14, 0.91);
+$modal-transition-out: cubic-bezier(0.98, 0.03, 0.66, 0.9);
+
+// Axis values
+$modal-transform-y-axis-distance: 3rem;
+
 .modal {
     &__triggers {
         margin-top: 7rem;
@@ -21,10 +28,15 @@ $theme-color-tertiary-light: #eebed3;
     }
 
     &__container {
+        position: fixed;
         inset: 0;
+        
+        display: flex;
+        justify-content: center;
+
         opacity: 0;
         visibility: hidden;
-        position: fixed;
+        
         transition: opacity linear .2s .4s, visibility linear .1s .5s;
     }
 
@@ -34,28 +46,23 @@ $theme-color-tertiary-light: #eebed3;
         background-color: #fff;
         border-radius: 1.5rem;
         padding: 2rem;
-
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        align-self: start;
+        opacity: 0;
+        visibility: hidden;
+        
+        position: relative;
         z-index: 100;
-    }
-
-    &__head {
-
+        transition: opacity $modal-transition-in .2s .1s, transform $modal-transition-in .2s .1s, visibility linear .1s .2s;
     }
 
     &__body {
-        height: 90%;
         display: flex;
         align-items: center;
         justify-content: center;
     }
-
-    &__foot {
-        position: absolute;
-        bottom: 2rem;
+    
+    .modal-blur {
+        backdrop-filter: blur(6px);
     }
 
     .show-modal {
@@ -63,8 +70,27 @@ $theme-color-tertiary-light: #eebed3;
         visibility: visible;
         transition: opacity linear .2s .1s, visibility linear .1s;
     }
+
+    .show-modal &__content {
+        opacity: 1;
+        visibility: visible;
+
+        transition: opacity $modal-transition-out .2s .3s, transform $modal-transition-out .2s .3s, visibility linear .1s;
+    }
+
+    .fade-in &__content {
+        transform: translate3d(0, calc($modal-transform-y-axis-distance * -1), 0);
+    }
+
+    .fade-out &__content {
+        transform: translate3d(0, $modal-transform-y-axis-distance, 0);
+    }
     
-    .modal-blur {
-        backdrop-filter: blur(6px);
+    .show-modal &__content {
+        transform: none;
+    }
+
+    .modal-centered &__content {
+        align-self: center;
     }
 }

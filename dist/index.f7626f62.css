@@ -192,7 +192,9 @@ body {
 .modal__container {
   opacity: 0;
   visibility: hidden;
+  justify-content: center;
   transition: opacity .2s linear .4s, visibility .1s linear .5s;
+  display: flex;
   position: fixed;
   inset: 0;
 }
@@ -200,26 +202,26 @@ body {
 .modal__content {
   height: 45rem;
   width: 60rem;
+  opacity: 0;
+  visibility: hidden;
   z-index: 100;
   background-color: #fff;
   border-radius: 1.5rem;
+  align-self: start;
   padding: 2rem;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  transition: opacity .2s cubic-bezier(.65, .14, .14, .91) .1s, transform .2s cubic-bezier(.65, .14, .14, .91) .1s, visibility .1s linear .2s;
+  position: relative;
 }
 
 .modal__body {
-  height: 90%;
   justify-content: center;
   align-items: center;
   display: flex;
 }
 
-.modal__foot {
-  position: absolute;
-  bottom: 2rem;
+.modal .modal-blur {
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
 }
 
 .modal .show-modal {
@@ -228,9 +230,26 @@ body {
   transition: opacity .2s linear .1s, visibility .1s linear;
 }
 
-.modal .modal-blur {
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
+.show-modal .modal__content {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity .2s cubic-bezier(.98, .03, .66, .9) .3s, transform .2s cubic-bezier(.98, .03, .66, .9) .3s, visibility .1s linear;
+}
+
+.fade-in .modal__content {
+  transform: translate3d(0, -3rem, 0);
+}
+
+.fade-out .modal__content {
+  transform: translate3d(0, 3rem, 0);
+}
+
+.show-modal .modal__content {
+  transform: none;
+}
+
+.modal-centered .modal__content {
+  align-self: center;
 }
 
 /*# sourceMappingURL=index.f7626f62.css.map */
