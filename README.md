@@ -3,6 +3,27 @@
 A very light vanilla JavaScript plugin for creating modals. You only write the
 HTML and the rest will be taken care of by the plugin.
 
+## Demo
+To try out Sassy Modal clone this repo and run the following commands.
+
+First install npm packages
+```bash
+npm install
+```
+
+Then run
+```bash
+npm start
+
+# output
+> sassymodal@1.0.0 start
+> parcel index.html
+
+Server running at http://localhost:1234
+Built in 1.60s
+```
+Visit `http://localhost:1234` to see the result. Your port may not be `1234`!
+
 ## How to Use Sassy Modal
 
 First you need to get the plugin file `SassyModal.js`. Copy it to your JS
