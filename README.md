@@ -30,7 +30,7 @@ First you need to get the plugin file `SassyModal.js`. Copy it to your JS
 directory. You can create a directory called `plugins/` in your JS directory
 and put the `SassyModal.js` there.
 
-In your index.js file you want to initialize the modal object as shown in example
+In your index.js file you want to instantiate the modal object as shown in example
 below:
 
 ```javascript
